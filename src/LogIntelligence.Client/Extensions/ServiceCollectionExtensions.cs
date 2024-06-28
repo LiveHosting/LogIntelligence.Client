@@ -11,8 +11,10 @@ namespace LogIntelligence.Client.Extensions
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddLogIntelligence(this IServiceCollection services, Action<LogIntelligenceOptions> configureOptions) 
-        { 
-            services.AddOptions<LogIntelligenceOptions>().Configure(configureOptions).ValidateOnStart();
+        {
+            services.AddOptions<LogIntelligenceOptions>()
+                .Configure(configureOptions)
+                .ValidateOnStart();
 
             services.AddHttpClient<LogIntelligenceClient>((serviceProvider, httpClient) =>
             {

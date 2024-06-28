@@ -12,7 +12,11 @@ namespace LogIntelligence.Client
         public async Task SendMessageAsync(CreateMessageRequest body)
         {
             HttpResponseMessage response = await http.PostAsJsonAsync("Messages/CreateMessage", body);
-            response.EnsureSuccessStatusCode();
+            //response.EnsureSuccessStatusCode();
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception(await response.Content.ReadAsStringAsync());
+            }
         }
     }
 }
