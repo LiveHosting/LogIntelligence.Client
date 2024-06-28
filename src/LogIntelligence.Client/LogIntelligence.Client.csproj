@@ -8,7 +8,21 @@
     <Title>LogIntelligence.Client</Title>
     <Description>.NET client for communicating with api.logint.ro API</Description>
     <PackageProjectUrl>https://www.logint.ro</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>Error;Exception;Reporting;Management;Logging;LogIntelligence;Diagnostics;Tracing</PackageTags>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <Version>2.0.8</Version>
+    <RepositoryUrl>https://github.com/LiveHosting/LogIntelligence.Client</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
