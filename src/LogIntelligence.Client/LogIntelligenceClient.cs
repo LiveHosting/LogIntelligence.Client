@@ -1,26 +1,23 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 
 namespace LogIntelligence.Client
 {
     public partial class LogIntelligenceClient
     {
-        private readonly ILogger<LogIntelligenceClient> logger;
-        private readonly HttpClient http;
-        private readonly LogIntelligenceOptions options;
+        private readonly HttpClient _http;
 
-        public LogIntelligenceClient(ILogger<LogIntelligenceClient> Logger, HttpClient HttpClient, IOptions<LogIntelligenceOptions> Options)
+        public LogIntelligenceClient(HttpClient httpClient)
         {
-            this.logger = Logger ?? throw new ArgumentNullException(nameof(Logger));
-            this.http = HttpClient ?? throw new ArgumentNullException(nameof(HttpClient));
-            this.options = Options.Value ?? throw new ArgumentNullException(nameof(Options));
+            _http = httpClient;
 
-            http.BaseAddress = new Uri("https://localhost:7290/");
+            //_http.BaseAddress = new Uri("https://localhost:7290/");
+            //_http.DefaultRequestHeaders.Add("X-API-KEY", _options.ApiKey.ToString());
+            //_http.DefaultRequestVersion = new Version(2, 0);
         }
 
         public async Task<string> TestAsync(string Name)
         {
-            HttpResponseMessage response = await http.GetAsync($"Test/Test?Name={Name}");
+            HttpResponseMessage response = await _http.GetAsync($"Test/Test?Name={Name}");
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsStringAsync();
         }

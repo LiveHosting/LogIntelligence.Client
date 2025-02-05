@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using LogIntelligence.Client.Requests;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LogIntelligence.Client
 {
     public partial class LogIntelligenceClient
     {
-        public async Task SendMessageAsync(CreateMessageRequest body)
+        public async Task SendLogMessageAsync(CreateLogMessageRequest body)
         {
-            HttpResponseMessage response = await http.PostAsJsonAsync("Messages/CreateMessage", body);
+            HttpResponseMessage response = await _http.PostAsJsonAsync("Messages/CreateLogMessage", body);
             //response.EnsureSuccessStatusCode();
             if (!response.IsSuccessStatusCode)
             {

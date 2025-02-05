@@ -1,24 +1,29 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LogIntelligence.Client.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddLogIntelligence(this IServiceCollection services, Action<LogIntelligenceOptions> configureOptions) 
+        public static IServiceCollection AddLogIntelligenceClient(this IServiceCollection services, Action<LogIntelligenceOptions> configure)
         {
-            services.AddOptions<LogIntelligenceOptions>()
-                .Configure(configureOptions)
-                .ValidateOnStart();
+            ArgumentNullException.ThrowIfNull(services);
+            ArgumentNullException.ThrowIfNull(configure);
 
-            services.AddHttpClient<LogIntelligenceClient>((serviceProvider, httpClient) =>
+            services.AddOptionsWithValidateOnStart<LogIntelligenceOptions>();
+            
+            services.Configure(configure);
+            //services.AddOptions<LogIntelligenceOptions>().Configure(configureOptions).ValidateOnStart();
+
+            services.AddHttpClient<LogIntelligenceClient>((serviceProvider, client) =>
             {
                 var options = serviceProvider.GetRequiredService<IOptions<LogIntelligenceOptions>>().Value;
+
+                client.DefaultRequestHeaders.Add("X-API-KEY", options.ApiKey.ToString());
+                client.DefaultRequestVersion = new Version(2, 0);
+
+                client.BaseAddress = new Uri("https://api.logint.ro/");
             });
 
             return services;
